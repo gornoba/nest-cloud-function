@@ -1,0 +1,25 @@
+steps:
+  - name: 'ubuntu'
+    args: ['bash', './env.sh']
+    env:
+      - 'CORS_ALLOWEDHEADERS=${_CORS_ALLOWEDHEADERS}'
+      - 'CORS_METHOD=${_CORS_METHOD}'
+      - 'PROD_CORS_ORIGIN=${_PROD_CORS_ORIGIN}'
+      - 'SEND_URL=${_SEND_URL}'
+  - name: 'ubuntu'
+    args: ['cat', './env.yaml']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud functions deploy meta-busan \
+        --runtime nodejs18 \
+        --trigger-http \
+        --entry-point nestjsApp \
+        --source ./ \
+        --region asia-northeast3 \
+        --env-vars-file env.yaml
+
+options:
+  logging: CLOUD_LOGGING_ONLY

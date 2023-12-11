@@ -1,0 +1,18 @@
+# Ignore node_modules folder
+node_modules/
+
+# Ignore .env file
+.env
+
+# Ignore .git folder
+.git/
+
+# Ignore log files
+*.log
+
+# Ignore test files
+*.test.js
+*.spec.js
+
+package-lock.json
+.env
